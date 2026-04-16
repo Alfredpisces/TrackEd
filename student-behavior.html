@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrackEd | Student Behavior</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body class="bg-slate-100 text-slate-800">
+  <div class="min-h-screen flex">
+    <aside class="w-64 bg-blue-900 text-blue-100 p-5 hidden md:block">
+      <div class="flex items-center gap-2 mb-8"><i class="fa-solid fa-school text-xl"></i><h1 class="text-xl font-bold">TrackEd</h1></div>
+      <nav class="space-y-2">
+        <a href="dashboard.html" class="block px-3 py-2 rounded-lg hover:bg-blue-800"><i class="fa-solid fa-chart-line mr-2"></i>Dashboard</a>
+        <a href="teacher-performance.html" class="block px-3 py-2 rounded-lg hover:bg-blue-800"><i class="fa-solid fa-chalkboard-user mr-2"></i>Teacher Performance</a>
+        <a href="student-behavior.html" class="block px-3 py-2 rounded-lg bg-blue-800 text-white font-medium"><i class="fa-solid fa-user-shield mr-2"></i>Student Behavior</a>
+        <a href="property-inventory.html" class="block px-3 py-2 rounded-lg hover:bg-blue-800"><i class="fa-solid fa-box-archive mr-2"></i>Property Inventory</a>
+        <a href="#" class="block px-3 py-2 rounded-lg hover:bg-blue-800"><i class="fa-solid fa-gear mr-2"></i>Settings</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1">
+      <header class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
+        <h2 class="text-xl font-bold text-blue-900">Student Behavior Tracking</h2>
+        <div class="flex items-center gap-4">
+          <button class="w-10 h-10 rounded-full bg-slate-100 text-slate-600"><i class="fa-regular fa-bell"></i></button>
+          <div class="w-10 h-10 rounded-full bg-blue-900 text-white grid place-items-center font-semibold">GC</div>
+        </div>
+      </header>
+
+      <section class="p-6 space-y-6">
+        <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+          <h3 class="text-lg font-semibold text-slate-700 mb-4">Log Incident</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium mb-1">Student LRN</label>
+              <input type="text" class="w-full border border-slate-300 rounded-lg px-3 py-2" placeholder="123456789012" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Offense Type</label>
+              <select class="w-full border border-slate-300 rounded-lg px-3 py-2 bg-white">
+                <option>Minor</option>
+                <option>Major</option>
+              </select>
+            </div>
+          </div>
+          <div class="mt-4">
+            <label class="block text-sm font-medium mb-1">Description</label>
+            <textarea rows="3" class="w-full border border-slate-300 rounded-lg px-3 py-2" placeholder="Enter incident details..."></textarea>
+          </div>
+          <div class="mt-4">
+            <label class="block text-sm font-medium mb-1">Restorative Action</label>
+            <textarea rows="3" class="w-full border border-slate-300 rounded-lg px-3 py-2" placeholder="Counseling, parent conference, reflection essay..."></textarea>
+          </div>
+          <button class="mt-5 bg-blue-900 hover:bg-blue-800 text-white px-5 py-2.5 rounded-lg font-semibold">Submit Incident Report</button>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+          <h3 class="text-lg font-semibold text-slate-700 mb-4">Good Moral Certificate</h3>
+          <div class="flex gap-2 mb-5">
+            <input type="text" placeholder="Search by LRN" class="flex-1 border border-slate-300 rounded-lg px-3 py-2" />
+            <button class="bg-slate-800 text-white px-4 rounded-lg">Search</button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <article class="border border-emerald-200 bg-emerald-50 rounded-lg p-4">
+              <p class="font-semibold">Learner: Carla Mendoza (LRN: 109334567890)</p>
+              <p class="text-sm text-slate-600 mt-1">Status: No unresolved major offenses.</p>
+              <button class="mt-3 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg font-semibold">Cleared: Generate PDF</button>
+            </article>
+            <article class="border border-rose-200 bg-rose-50 rounded-lg p-4">
+              <p class="font-semibold">Learner: Noel Ramos (LRN: 108765432101)</p>
+              <p class="text-sm text-rose-700 mt-1 font-medium">Blocked: Unresolved Major Offense</p>
+              <div class="mt-3 text-rose-700"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Pending counselor resolution required.</div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
