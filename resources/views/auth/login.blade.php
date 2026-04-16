@@ -13,21 +13,30 @@
       <p class="text-blue-100 text-sm mt-2">Centralized School Information System</p>
     </div>
 
-    <form id="loginForm" class="px-8 py-7 space-y-5" novalidate>
-      <div id="successBanner" class="hidden bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm rounded-lg px-4 py-3">
-        <i class="fa-solid fa-circle-check mr-1"></i> Account created! You can now log in.
+    <form method="POST" action="/login" class="px-8 py-7 space-y-5">
+      @csrf
+
+      @if(session('status'))
+      <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm rounded-lg px-4 py-3">
+        <i class="fa-solid fa-circle-check mr-1"></i> {{ session('status') }}
       </div>
-      <div id="errorBanner" class="hidden bg-rose-50 border border-rose-200 text-rose-700 text-sm rounded-lg px-4 py-3"></div>
+      @endif
+
+      @if($errors->any())
+      <div class="bg-rose-50 border border-rose-200 text-rose-700 text-sm rounded-lg px-4 py-3">
+        {{ $errors->first() }}
+      </div>
+      @endif
 
       <div>
         <label for="email" class="block text-sm font-semibold text-slate-700 mb-1">Email</label>
-        <input id="email" type="email" placeholder="name@school.edu.ph"
-          class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-700" />
+        <input id="email" name="email" type="email" value="{{ old('email') }}" placeholder="name@school.edu.ph"
+          class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-700 @error('email') border-rose-400 @enderror" />
       </div>
 
       <div>
         <label for="password" class="block text-sm font-semibold text-slate-700 mb-1">Password</label>
-        <input id="password" type="password" placeholder="••••••••"
+        <input id="password" name="password" type="password" placeholder="••••••••"
           class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-700" />
       </div>
 
@@ -35,11 +44,6 @@
         class="w-full rounded-lg bg-blue-900 hover:bg-blue-800 text-white text-center font-semibold py-2.5 transition-colors">
         <i class="fa-solid fa-right-to-bracket mr-2"></i>Login
       </button>
-
-      <p class="text-center text-sm text-slate-600">
-        Don't have an account?
-        <a href="{{ route('register') }}" class="text-blue-700 font-semibold hover:underline">Register</a>
-      </p>
     </form>
   </div>
 
@@ -63,37 +67,9 @@
 
 @section('scripts')
 <script>
-  if (Auth.getUser()) window.location.replace('/dashboard');
-
-  if (new URLSearchParams(location.search).get('registered') === '1') {
-    document.getElementById('successBanner').classList.remove('hidden');
-  }
-
   function fillDemo(email, password) {
     document.getElementById('email').value    = email;
     document.getElementById('password').value = password;
   }
-
-  document.getElementById('loginForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const email       = document.getElementById('email').value.trim();
-    const password    = document.getElementById('password').value;
-    const errorBanner = document.getElementById('errorBanner');
-    errorBanner.classList.add('hidden');
-
-    if (!email || !password) {
-      errorBanner.textContent = 'Please enter your email and password.';
-      errorBanner.classList.remove('hidden');
-      return;
-    }
-
-    const result = Auth.login(email, password);
-    if (!result.ok) {
-      errorBanner.textContent = result.msg;
-      errorBanner.classList.remove('hidden');
-      return;
-    }
-    window.location.href = '/dashboard';
-  });
 </script>
 @endsection

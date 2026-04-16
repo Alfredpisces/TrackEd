@@ -16,7 +16,7 @@
 @endsection
 
 @section('user-role-display')
-<p class="text-xs text-slate-500" id="userRole"></p>
+<p class="text-xs text-slate-500">{{ Auth::user()->role }}</p>
 @endsection
 
 @section('content')
@@ -56,14 +56,6 @@
 
 @section('scripts')
 <script>
-  const user = Auth.require();
-  if (!user) throw new Error('unauthenticated');
-
-  document.getElementById('userName').textContent    = user.name;
-  document.getElementById('userRole').textContent    = user.role;
-  document.getElementById('userInitials').textContent = user.initials;
-  document.getElementById('pageTitle').textContent   = user.role + ' Dashboard';
-
   const incidents = JSON.parse(localStorage.getItem('tracked_incidents') || '[]');
   const unresolved = incidents.filter(i => !i.resolved).length;
   document.getElementById('kpiIncidents').textContent = unresolved;

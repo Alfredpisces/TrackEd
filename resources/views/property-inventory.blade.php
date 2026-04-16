@@ -69,11 +69,6 @@
 
 @section('scripts')
 <script>
-  const user = Auth.require();
-  if (!user) throw new Error('unauthenticated');
-  document.getElementById('userName').textContent     = user.name;
-  document.getElementById('userInitials').textContent = user.initials;
-
   const ASSET_KEY = 'tracked_assets';
   const DEFAULT_ASSETS = [
     { item: 'Lenovo Laptop', serial: 'LNV-2025-00192', condition: 'Functional', updated: 'Apr 1, 2026' },

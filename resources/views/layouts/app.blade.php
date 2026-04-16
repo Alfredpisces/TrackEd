@@ -7,7 +7,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   @yield('head-scripts')
-  <script src="{{ asset('js/auth.js') }}"></script>
 </head>
 <body class="bg-slate-100 text-slate-800">
   <div class="min-h-screen flex">
@@ -34,26 +33,37 @@
            class="block px-3 py-2 rounded-lg {{ request()->routeIs('property-inventory') ? 'bg-blue-800 text-white font-medium' : 'hover:bg-blue-800' }}">
           <i class="fa-solid fa-box-archive mr-2"></i>Property Inventory
         </a>
+        @if(Auth::user()->role === 'Admin')
+        <a href="{{ route('users.index') }}"
+           class="block px-3 py-2 rounded-lg {{ request()->routeIs('users.*') ? 'bg-blue-800 text-white font-medium' : 'hover:bg-blue-800' }}">
+          <i class="fa-solid fa-users-gear mr-2"></i>Manage Users
+        </a>
+        @endif
         <a href="#" class="block px-3 py-2 rounded-lg hover:bg-blue-800">
           <i class="fa-solid fa-gear mr-2"></i>Settings
         </a>
       </nav>
-      <button onclick="Auth.logout()"
-              class="mt-4 flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-blue-800 text-blue-200 w-full text-left text-sm">
-        <i class="fa-solid fa-right-from-bracket"></i> Logout
-      </button>
+      <form action="{{ route('logout') }}" method="POST" class="mt-4">
+        @csrf
+        <button type="submit"
+                class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-blue-800 text-blue-200 w-full text-left text-sm">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </button>
+      </form>
     </aside>
 
     <main class="flex-1">
       <header class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
-        <h2 class="text-xl font-bold text-blue-900" id="pageTitle">@yield('page-title')</h2>
+        <h2 class="text-xl font-bold text-blue-900">@yield('page-title')</h2>
         <div class="flex items-center gap-4">
           @yield('header-extras')
           <div class="flex items-center gap-2">
-            <div class="w-10 h-10 rounded-full bg-blue-900 text-white grid place-items-center font-semibold" id="userInitials">?</div>
+            <div class="w-10 h-10 rounded-full bg-blue-900 text-white grid place-items-center font-semibold text-sm">
+              {{ Auth::user()->initials() }}
+            </div>
             <div>
-              <p class="text-sm font-semibold" id="userName">Loading…</p>
-              @yield('user-role-display')
+              <p class="text-sm font-semibold">{{ Auth::user()->name }}</p>
+              <p class="text-xs text-slate-500">{{ Auth::user()->role }}</p>
             </div>
           </div>
         </div>

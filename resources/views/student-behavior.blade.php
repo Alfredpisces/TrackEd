@@ -83,11 +83,6 @@
 
 @section('scripts')
 <script>
-  const user = Auth.require();
-  if (!user) throw new Error('unauthenticated');
-  document.getElementById('userName').textContent     = user.name;
-  document.getElementById('userInitials').textContent = user.initials;
-
   const INC_KEY = 'tracked_incidents';
 
   const MOCK_STUDENTS = {
@@ -165,7 +160,7 @@
       lrn, grade, type, description: desc, action,
       resolved: false,
       date: new Date().toLocaleDateString('en-PH'),
-      loggedBy: user.name
+      loggedBy: '{{ Auth::user()->name }}'
     });
     saveIncidents(incidents);
 

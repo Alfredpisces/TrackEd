@@ -82,11 +82,6 @@
 
 @section('scripts')
 <script>
-  const user = Auth.require();
-  if (!user) throw new Error('unauthenticated');
-  document.getElementById('userName').textContent     = user.name;
-  document.getElementById('userInitials').textContent = user.initials;
-
   const DLL_KEY = 'tracked_dlls';
 
   function renderDLLList() {
@@ -121,7 +116,7 @@
     }
 
     const dlls = JSON.parse(localStorage.getItem(DLL_KEY) || '[]');
-    dlls.push({ subject, date, objectives, procedures, savedBy: user.name, savedAt: new Date().toISOString() });
+    dlls.push({ subject, date, objectives, procedures, savedBy: '{{ Auth::user()->name }}', savedAt: new Date().toISOString() });
     localStorage.setItem(DLL_KEY, JSON.stringify(dlls));
 
     okEl.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> DLL saved successfully!';
