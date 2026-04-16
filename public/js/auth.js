@@ -1,6 +1,6 @@
 /**
  * TrackEd – lightweight localStorage-based auth layer
- * No server required; works with plain static HTML files.
+ * Works with the Laravel Blade views served via routes/web.php.
  */
 const Auth = (() => {
   const SESSION_KEY = 'tracked_session';
@@ -54,7 +54,7 @@ const Auth = (() => {
     /** Destroy session and redirect to login. */
     logout() {
       localStorage.removeItem(SESSION_KEY);
-      window.location.href = 'index.html';
+      window.location.href = '/';
     },
 
     /** Return current session object or null. */
@@ -69,7 +69,7 @@ const Auth = (() => {
      */
     require() {
       const user = this.getUser();
-      if (!user) { window.location.replace('index.html'); return null; }
+      if (!user) { window.location.replace('/'); return null; }
       return user;
     }
   };

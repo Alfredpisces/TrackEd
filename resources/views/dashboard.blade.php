@@ -1,0 +1,128 @@
+@extends('layouts.app')
+
+@section('title', 'TrackEd | Dashboard')
+
+@section('head-scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@endsection
+
+@section('page-title', 'Dashboard')
+
+@section('header-extras')
+<button class="w-10 h-10 rounded-full bg-slate-100 text-slate-600 relative" id="notifBtn">
+  <i class="fa-regular fa-bell"></i>
+  <span id="notifBadge" class="absolute -top-1 -right-1 bg-rose-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center hidden">0</span>
+</button>
+@endsection
+
+@section('user-role-display')
+<p class="text-xs text-slate-500" id="userRole"></p>
+@endsection
+
+@section('content')
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <article class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+    <p class="text-sm text-slate-500">Total Students</p>
+    <p class="text-3xl font-bold text-blue-900 mt-2" id="kpiStudents">1,284</p>
+  </article>
+  <article class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+    <p class="text-sm text-slate-500">Unresolved Incidents</p>
+    <p class="text-3xl font-bold text-amber-600 mt-2" id="kpiIncidents">0</p>
+  </article>
+  <article class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+    <p class="text-sm text-slate-500">Pending Clearances</p>
+    <p class="text-3xl font-bold text-rose-600 mt-2">9</p>
+  </article>
+</div>
+
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+  <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+    <h3 class="font-semibold text-slate-700 mb-4">DLL Compliance by Department</h3>
+    <canvas id="dllChart" height="170"></canvas>
+  </div>
+  <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+    <h3 class="font-semibold text-slate-700 mb-4">Behavioral Incidents by Grade Level</h3>
+    <canvas id="behaviorChart" height="170"></canvas>
+  </div>
+</div>
+
+<div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+  <h3 class="font-semibold text-slate-700 mb-4">Recent Incident Reports</h3>
+  <ul id="incidentFeed" class="space-y-2 text-sm text-slate-600">
+    <li class="text-slate-400 italic">No incidents logged yet.</li>
+  </ul>
+</div>
+@endsection
+
+@section('scripts')
+<script>
+  const user = Auth.require();
+  if (!user) throw new Error('unauthenticated');
+
+  document.getElementById('userName').textContent    = user.name;
+  document.getElementById('userRole').textContent    = user.role;
+  document.getElementById('userInitials').textContent = user.initials;
+  document.getElementById('pageTitle').textContent   = user.role + ' Dashboard';
+
+  const incidents = JSON.parse(localStorage.getItem('tracked_incidents') || '[]');
+  const unresolved = incidents.filter(i => !i.resolved).length;
+  document.getElementById('kpiIncidents').textContent = unresolved;
+
+  if (unresolved > 0) {
+    const badge = document.getElementById('notifBadge');
+    badge.textContent = unresolved > 9 ? '9+' : unresolved;
+    badge.classList.remove('hidden');
+  }
+
+  if (incidents.length > 0) {
+    const feed = document.getElementById('incidentFeed');
+    feed.innerHTML = '';
+    incidents.slice(-5).reverse().forEach(inc => {
+      const li = document.createElement('li');
+      li.className = 'flex items-start gap-2';
+      li.innerHTML = `<span class="mt-0.5 w-2 h-2 rounded-full flex-shrink-0 ${inc.type === 'Major' ? 'bg-rose-500' : 'bg-amber-400'}"></span>
+        <span><strong>${inc.lrn}</strong> — ${inc.type} offense &nbsp;<span class="text-slate-400 text-xs">${inc.date}</span></span>`;
+      feed.appendChild(li);
+    });
+  }
+
+  if (window.Chart) {
+    new Chart(document.getElementById('dllChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Math', 'Science', 'English', 'Filipino', 'MAPEH'],
+        datasets: [{
+          label: 'Compliance %',
+          data: [94, 88, 91, 96, 86],
+          backgroundColor: '#1e3a8a',
+          borderRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true, max: 100 } }
+      }
+    });
+
+    const incidentsByGrade = [0, 0, 0, 0];
+    incidents.forEach(inc => {
+      const g = parseInt(inc.grade) - 7;
+      if (g >= 0 && g < 4) incidentsByGrade[g]++;
+    });
+    const pieData = incidentsByGrade.map((v, i) => v || [22, 18, 15, 12][i]);
+
+    new Chart(document.getElementById('behaviorChart'), {
+      type: 'pie',
+      data: {
+        labels: ['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10'],
+        datasets: [{
+          data: pieData,
+          backgroundColor: ['#1e3a8a', '#3b82f6', '#93c5fd', '#dbeafe']
+        }]
+      },
+      options: { responsive: true }
+    });
+  }
+</script>
+@endsection
