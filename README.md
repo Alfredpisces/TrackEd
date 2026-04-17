@@ -14,7 +14,10 @@ A Laravel-based capstone project for DepEd schools. Tracks teacher performance (
    - `resources/views/layouts/guest.blade.php` — login/register layout
    - `resources/views/auth/login.blade.php`
    - `resources/views/auth/register.blade.php`
-   - `resources/views/dashboard.blade.php`
+   - `resources/views/dashboards/admin.blade.php`
+   - `resources/views/dashboards/school-head.blade.php`
+   - `resources/views/dashboards/counselor.blade.php`
+   - `resources/views/dashboards/teacher.blade.php`
    - `resources/views/teacher-performance.blade.php`
    - `resources/views/student-behavior.blade.php`
    - `resources/views/property-inventory.blade.php`
@@ -44,7 +47,11 @@ A Laravel-based capstone project for DepEd schools. Tracks teacher performance (
 |------------------------|----------------------------------------|
 | `/`                    | Login page                             |
 | `/register`            | Registration page                      |
-| `/dashboard`           | KPI cards, DLL compliance chart        |
+| `/dashboard`           | Redirects to the role-specific dashboard |
+| `/dashboard/admin`     | Admin command center                   |
+| `/dashboard/school-head` | School head performance overview     |
+| `/dashboard/counselor` | Counselor case management overview     |
+| `/dashboard/teacher`   | Teacher task dashboard                  |
 | `/teacher-performance` | DLL builder, AI pre-check, DSS ranking |
 | `/student-behavior`    | Incident log, Good Moral certificate   |
 | `/property-inventory`  | E-PAR asset table, year-end clearance  |
