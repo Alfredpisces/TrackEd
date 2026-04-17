@@ -9,6 +9,7 @@
   @yield('head-scripts')
 </head>
 <body class="bg-slate-100 text-slate-800">
+  @php($role = Auth::user()->role)
   <div class="min-h-screen flex">
 
     <aside class="w-64 bg-blue-900 text-blue-100 p-5 hidden md:flex flex-col">
@@ -17,22 +18,28 @@
         <h1 class="text-xl font-bold">TrackEd</h1>
       </div>
       <nav class="space-y-2 flex-1">
-        <a href="{{ route('dashboard') }}"
-           class="block px-3 py-2 rounded-lg {{ request()->routeIs('dashboard') ? 'bg-blue-800 text-white font-medium' : 'hover:bg-blue-800' }}">
+        <a href="{{ route(Auth::user()->dashboardRouteName()) }}"
+           class="block px-3 py-2 rounded-lg {{ request()->routeIs('dashboard') || request()->routeIs('dashboard.*') ? 'bg-blue-800 text-white font-medium' : 'hover:bg-blue-800' }}">
           <i class="fa-solid fa-chart-line mr-2"></i>Dashboard
         </a>
+        @if(in_array($role, ['Teacher', 'School Head']))
         <a href="{{ route('teacher-performance') }}"
            class="block px-3 py-2 rounded-lg {{ request()->routeIs('teacher-performance') ? 'bg-blue-800 text-white font-medium' : 'hover:bg-blue-800' }}">
           <i class="fa-solid fa-chalkboard-user mr-2"></i>Teacher Performance
         </a>
+        @endif
+        @if($role === 'Counselor')
         <a href="{{ route('student-behavior') }}"
            class="block px-3 py-2 rounded-lg {{ request()->routeIs('student-behavior') ? 'bg-blue-800 text-white font-medium' : 'hover:bg-blue-800' }}">
           <i class="fa-solid fa-user-shield mr-2"></i>Student Behavior
         </a>
+        @endif
+        @if(in_array($role, ['Admin', 'Teacher']))
         <a href="{{ route('property-inventory') }}"
            class="block px-3 py-2 rounded-lg {{ request()->routeIs('property-inventory') ? 'bg-blue-800 text-white font-medium' : 'hover:bg-blue-800' }}">
           <i class="fa-solid fa-box-archive mr-2"></i>Property Inventory
         </a>
+        @endif
         @if(Auth::user()->role === 'Admin')
         <a href="{{ route('users.index') }}"
            class="block px-3 py-2 rounded-lg {{ request()->routeIs('users.*') && !request()->routeIs('users.lis-sync') ? 'bg-blue-800 text-white font-medium' : 'hover:bg-blue-800' }}">
