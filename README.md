@@ -6,7 +6,7 @@ A Laravel-based capstone project for DepEd schools. Tracks teacher performance (
 
 1. **Pull this repo into your existing Laravel project folder:**
    ```bash
-   git pull origin copilot/scaffold-ui-prototype
+   git pull origin <branch-name>
    ```
 
 2. **The following files will be added/updated automatically:**
