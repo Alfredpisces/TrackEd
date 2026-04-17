@@ -126,6 +126,17 @@
               <p class="text-xs text-slate-500">{{ $profileRole }}</p>
             </div>
           </div>
+          {{-- Logout button visible on mobile (sidebar is hidden on small screens) --}}
+          @if(Auth::check())
+          <form action="{{ route('logout') }}" method="POST" class="lg:hidden">
+            @csrf
+            <button type="submit"
+                    class="w-10 h-10 rounded-full border border-slate-200 bg-white hover:bg-rose-50 hover:border-rose-300 grid place-items-center transition"
+                    title="Logout">
+              <i class="fa-solid fa-right-from-bracket text-slate-500 hover:text-rose-500"></i>
+            </button>
+          </form>
+          @endif
         </div>
       </header>
 

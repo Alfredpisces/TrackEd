@@ -17,7 +17,7 @@ class UserController extends Controller
     {
         $users = User::with('school')->orderBy('role')->orderBy('name')->get();
 
-        return view('users.index', compact('users'));
+        return view('admin.users.index', compact('users'));
     }
 
     /** Show the create-user form (admin only). */
@@ -25,7 +25,7 @@ class UserController extends Controller
     {
         $schools = School::orderBy('name')->get();
 
-        return view('users.create', compact('schools'));
+        return view('admin.users.create', compact('schools'));
     }
 
     /** Persist a new user account (admin only). */
@@ -58,7 +58,7 @@ class UserController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('users.transfer', compact('user', 'schools'));
+        return view('admin.users.transfer', compact('user', 'schools'));
     }
 
     /**
