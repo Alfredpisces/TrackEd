@@ -19,10 +19,13 @@ Route::post('/logout', [LoginController::class, 'logout'])
     ->name('logout')
     ->middleware('auth');
 
-Route::get('/admin', function () { return view('admin.dashboard'); })->middleware('auth');
-Route::get('/head', function () { return view('head.dashboard'); })->middleware('auth');
-Route::get('/counselor', function () { return view('counselor.dashboard'); })->middleware('auth');
-Route::get('/teacher', function () { return view('teacher.dashboard'); })->middleware('auth');
+// Convenience shortcuts redirect to the real authenticated dashboards
+Route::middleware('auth')->group(function () {
+    Route::get('/admin',     fn () => redirect()->route('dashboard.admin'));
+    Route::get('/head',      fn () => redirect()->route('dashboard.school-head'));
+    Route::get('/counselor', fn () => redirect()->route('dashboard.counselor'));
+    Route::get('/teacher',   fn () => redirect()->route('dashboard.teacher'));
+});
 
 /*
 |--------------------------------------------------------------------------
