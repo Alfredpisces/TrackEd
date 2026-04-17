@@ -65,4 +65,22 @@ class User extends Authenticatable
             default => ['Limited Access'],
         };
     }
+
+    /** Route name for the role-specific dashboard. */
+    public static function dashboardRouteNameForRole(string $role): string
+    {
+        return match ($role) {
+            'Admin' => 'dashboard.admin',
+            'School Head' => 'dashboard.school-head',
+            'Counselor' => 'dashboard.counselor',
+            'Teacher' => 'dashboard.teacher',
+            default => 'dashboard.teacher',
+        };
+    }
+
+    /** Route name for the current user's dashboard. */
+    public function dashboardRouteName(): string
+    {
+        return self::dashboardRouteNameForRole($this->role);
+    }
 }

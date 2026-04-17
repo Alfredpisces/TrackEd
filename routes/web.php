@@ -25,10 +25,32 @@ Route::post('/logout', [LoginController::class, 'logout'])
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard',           fn () => view('dashboard'))->name('dashboard');
-    Route::get('/teacher-performance', fn () => view('teacher-performance'))->name('teacher-performance');
-    Route::get('/student-behavior',    fn () => view('student-behavior'))->name('student-behavior');
-    Route::get('/property-inventory',  fn () => view('property-inventory'))->name('property-inventory');
+    Route::get('/dashboard', function () {
+        return redirect()->route(request()->user()->dashboardRouteName());
+    })->name('dashboard');
+
+    Route::get('/dashboard/admin', fn () => view('dashboards.admin'))
+        ->name('dashboard.admin')
+        ->middleware(EnsureRole::class . ':Admin');
+    Route::get('/dashboard/school-head', fn () => view('dashboards.school-head'))
+        ->name('dashboard.school-head')
+        ->middleware(EnsureRole::class . ':School Head');
+    Route::get('/dashboard/counselor', fn () => view('dashboards.counselor'))
+        ->name('dashboard.counselor')
+        ->middleware(EnsureRole::class . ':Counselor');
+    Route::get('/dashboard/teacher', fn () => view('dashboards.teacher'))
+        ->name('dashboard.teacher')
+        ->middleware(EnsureRole::class . ':Teacher');
+
+    Route::get('/teacher-performance', fn () => view('teacher-performance'))
+        ->name('teacher-performance')
+        ->middleware(EnsureRole::class . ':Teacher,School Head');
+    Route::get('/student-behavior', fn () => view('student-behavior'))
+        ->name('student-behavior')
+        ->middleware(EnsureRole::class . ':Counselor');
+    Route::get('/property-inventory', fn () => view('property-inventory'))
+        ->name('property-inventory')
+        ->middleware(EnsureRole::class . ':Admin,Teacher');
 
     /*
     |----------------------------------------------------------------------
