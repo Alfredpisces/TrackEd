@@ -35,7 +35,7 @@
         </a>
         @if(Auth::user()->role === 'Admin')
         <a href="{{ route('users.index') }}"
-           class="block px-3 py-2 rounded-lg {{ request()->routeIs('users.index', 'users.create', 'users.store', 'users.transfer', 'users.doTransfer') ? 'bg-blue-800 text-white font-medium' : 'hover:bg-blue-800' }}">
+           class="block px-3 py-2 rounded-lg {{ request()->routeIs('users.*') && !request()->routeIs('users.lis-sync') ? 'bg-blue-800 text-white font-medium' : 'hover:bg-blue-800' }}">
           <i class="fa-solid fa-users-gear mr-2"></i>Manage Personnel
         </a>
         <a href="{{ route('users.lis-sync') }}"
