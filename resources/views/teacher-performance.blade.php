@@ -180,6 +180,10 @@
   const DLL_KEY = 'tracked_dlls';
   const DLL_STATUS_KEY = 'tracked_dll_status';
   const COT_KEY = 'tracked_cot_scores';
+  const DLL_MIN_OBJECTIVES = 20;
+  const DLL_MIN_PROCEDURES = 30;
+  const DLL_MIN_CONTENT = 20;
+  const DLL_MIN_REFLECTION = 20;
 
   function renderDLLList() {
     const dlls = JSON.parse(localStorage.getItem(DLL_KEY) || '[]');
@@ -315,7 +319,10 @@
     this.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Analyzing…';
 
     setTimeout(() => {
-      const hasKeywords = objectives.length > 20 && procedures.length > 30 && content.length > 20 && reflection.length > 20;
+      const hasKeywords = objectives.length > DLL_MIN_OBJECTIVES
+        && procedures.length > DLL_MIN_PROCEDURES
+        && content.length > DLL_MIN_CONTENT
+        && reflection.length > DLL_MIN_REFLECTION;
       if (hasKeywords) {
         resultEl.innerHTML = `
           <p class="font-semibold text-emerald-700"><i class="fa-solid fa-circle-check mr-1"></i> AI Pre-Check Passed</p>

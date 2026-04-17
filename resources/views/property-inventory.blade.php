@@ -128,6 +128,7 @@
 <script>
   const ASSET_KEY = 'tracked_assets';
   const EPAR_KEY = 'tracked_epar_last';
+  const EPAR_SEQ_KEY = 'tracked_epar_seq';
   const DEFAULT_ASSETS = [
     {
       item: 'Lenovo Laptop',
@@ -386,7 +387,9 @@
       history: [{ date: today, condition: 'Functional', remarks: 'Assigned via E-PAR', resolution: 'Unresolved' }]
     });
     saveAssets(assets);
-    const ref = Math.floor(Math.random() * 9000) + 1000;
+    const lastSeq = parseInt(localStorage.getItem(EPAR_SEQ_KEY) || '1000', 10);
+    const ref = lastSeq + 1;
+    localStorage.setItem(EPAR_SEQ_KEY, ref.toString());
     localStorage.setItem(EPAR_KEY, JSON.stringify({
       ref,
       item,

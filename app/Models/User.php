@@ -53,4 +53,16 @@ class User extends Authenticatable
             ->take(2)
             ->implode('');
     }
+
+    /** PBAC permission labels used for UI summaries. */
+    public static function permissionsForRole(string $role): array
+    {
+        return match ($role) {
+            'Admin' => ['Manage Personnel', 'LIS Sync', 'Inventory Oversight'],
+            'School Head' => ['Approve DLL', 'Encode COT', 'Generate Rankings'],
+            'Counselor' => ['Log Incidents', 'Resolve Cases', 'Issue Good Moral'],
+            'Teacher' => ['Submit DLL', 'Upload Seminars', 'Update Assets'],
+            default => ['Limited Access'],
+        };
+    }
 }

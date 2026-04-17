@@ -9,6 +9,16 @@
 @endsection
 
 @section('content')
+@php
+  $mockStudents = [
+    '109334567890' => 'Carla Mendoza',
+    '108765432101' => 'Noel Ramos',
+    '112233445566' => 'Jose Reyes',
+    '998877665544' => 'Maria Clara',
+  ];
+@endphp
+<div id="studentBehaviorData" class="hidden" data-mock-students='@json($mockStudents)'></div>
+
 <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
   <h3 class="text-lg font-semibold text-slate-700 mb-4">Log Incident</h3>
   <form id="incidentForm" novalidate>
@@ -146,12 +156,9 @@
 <script>
   const INC_KEY = 'tracked_incidents';
 
-  const MOCK_STUDENTS = {
-    '109334567890': 'Carla Mendoza',
-    '108765432101': 'Noel Ramos',
-    '112233445566': 'Jose Reyes',
-    '998877665544': 'Maria Clara',
-  };
+  const MOCK_STUDENTS = JSON.parse(
+    document.getElementById('studentBehaviorData')?.dataset.mockStudents || '{}'
+  );
 
   function saveIncidents(arr) { localStorage.setItem(INC_KEY, JSON.stringify(arr)); }
 

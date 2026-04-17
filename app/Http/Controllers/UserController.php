@@ -65,8 +65,8 @@ class UserController extends Controller
      * Transfer a user to a different school (admin only).
      *
      * Requires the user to have no non-functional assets (clearance).
-     * Assets are currently tracked in the browser (localStorage); this
-     * validation will be re-evaluated once assets are stored server-side.
+     * TODO: enforce clearance server-side once assets are persisted in the database
+     * (currently tracked in the browser via localStorage).
      */
     public function transfer(Request $request, User $user): RedirectResponse
     {

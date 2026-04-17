@@ -41,13 +41,7 @@
           'Counselor'   => 'bg-blue-100 text-blue-700',
           default       => 'bg-slate-100 text-slate-600',
         };
-        $permissionMap = [
-          'Admin' => ['Manage Personnel', 'LIS Sync', 'Inventory Oversight'],
-          'School Head' => ['Approve DLL', 'Encode COT', 'Generate Rankings'],
-          'Counselor' => ['Log Incidents', 'Resolve Cases', 'Issue Good Moral'],
-          'Teacher' => ['Submit DLL', 'Upload Seminars', 'Update Assets'],
-        ];
-        $permissions = $permissionMap[$u->role] ?? ['Limited Access'];
+        $permissions = \App\Models\User::permissionsForRole($u->role);
         $isActive = (bool) $u->school_id;
         $statusBadge = $isActive
           ? 'bg-emerald-100 text-emerald-700'
