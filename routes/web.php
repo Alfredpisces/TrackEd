@@ -19,6 +19,11 @@ Route::post('/logout', [LoginController::class, 'logout'])
     ->name('logout')
     ->middleware('auth');
 
+Route::get('/admin', function () { return view('admin.dashboard'); });
+Route::get('/head', function () { return view('head.dashboard'); });
+Route::get('/counselor', function () { return view('counselor.dashboard'); });
+Route::get('/teacher', function () { return view('teacher.dashboard'); });
+
 /*
 |--------------------------------------------------------------------------
 | Authenticated routes

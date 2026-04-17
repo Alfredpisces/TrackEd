@@ -9,85 +9,80 @@
   @yield('head-scripts')
 </head>
 <body class="bg-slate-100 text-slate-800">
-  @php($role = Auth::user()->role)
-  <div class="min-h-screen flex">
+  @php
+    $currentPath = request()->path();
+    $profileName = optional(Auth::user())->name ?? 'Dr. Maria Santos';
+    $profileRole = optional(Auth::user())->role ?? 'School Head';
+    $profileInitials = optional(Auth::user())->initials() ?? 'MS';
+    $sidebarLinks = [
+      ['label' => 'Dashboard', 'icon' => 'fa-chart-line', 'href' => '/head', 'match' => ['admin', 'head', 'counselor', 'teacher']],
+      ['label' => 'User Management', 'icon' => 'fa-users-gear', 'href' => '/admin', 'match' => ['admin']],
+      ['label' => 'Performance', 'icon' => 'fa-chalkboard-user', 'href' => '/head', 'match' => ['head']],
+      ['label' => 'Discipline', 'icon' => 'fa-user-shield', 'href' => '/counselor', 'match' => ['counselor']],
+      ['label' => 'Inventory', 'icon' => 'fa-box-archive', 'href' => '/teacher', 'match' => ['teacher']],
+    ];
+  @endphp
 
-    <aside class="w-64 bg-blue-900 text-blue-100 p-5 hidden md:flex flex-col">
-      <div class="flex items-center gap-2 mb-8">
-        <i class="fa-solid fa-school text-xl"></i>
-        <h1 class="text-xl font-bold">TrackEd</h1>
+  <div class="min-h-screen flex">
+    <aside class="w-72 bg-blue-900 text-blue-100 p-6 hidden lg:flex flex-col shadow-2xl">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-11 h-11 rounded-xl bg-blue-700 grid place-items-center">
+          <i class="fa-solid fa-school text-white text-lg"></i>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold tracking-wide">TrackEd</h1>
+          <p class="text-xs text-blue-200">DepEd Information System</p>
+        </div>
       </div>
+
       <nav class="space-y-2 flex-1">
-        <a href="{{ route(Auth::user()->dashboardRouteName()) }}"
-           class="block px-3 py-2 rounded-lg {{ request()->routeIs('dashboard') || request()->routeIs('dashboard.*') ? 'bg-blue-800 text-white font-medium' : 'hover:bg-blue-800' }}">
-          <i class="fa-solid fa-chart-line mr-2"></i>Dashboard
-        </a>
-        @if(in_array($role, ['Teacher', 'School Head']))
-        <a href="{{ route('teacher-performance') }}"
-           class="block px-3 py-2 rounded-lg {{ request()->routeIs('teacher-performance') ? 'bg-blue-800 text-white font-medium' : 'hover:bg-blue-800' }}">
-          <i class="fa-solid fa-chalkboard-user mr-2"></i>Teacher Performance
-        </a>
-        @endif
-        @if($role === 'Counselor')
-        <a href="{{ route('student-behavior') }}"
-           class="block px-3 py-2 rounded-lg {{ request()->routeIs('student-behavior') ? 'bg-blue-800 text-white font-medium' : 'hover:bg-blue-800' }}">
-          <i class="fa-solid fa-user-shield mr-2"></i>Student Behavior
-        </a>
-        @endif
-        @if(in_array($role, ['Admin', 'Teacher']))
-        <a href="{{ route('property-inventory') }}"
-           class="block px-3 py-2 rounded-lg {{ request()->routeIs('property-inventory') ? 'bg-blue-800 text-white font-medium' : 'hover:bg-blue-800' }}">
-          <i class="fa-solid fa-box-archive mr-2"></i>Property Inventory
-        </a>
-        @endif
-        @if(Auth::user()->role === 'Admin')
-        <a href="{{ route('users.index') }}"
-           class="block px-3 py-2 rounded-lg {{ request()->routeIs('users.*') && !request()->routeIs('users.lis-sync') ? 'bg-blue-800 text-white font-medium' : 'hover:bg-blue-800' }}">
-          <i class="fa-solid fa-users-gear mr-2"></i>Manage Personnel
-        </a>
-        <a href="{{ route('users.lis-sync') }}"
-           class="block px-3 py-2 rounded-lg {{ request()->routeIs('users.lis-sync') ? 'bg-blue-800 text-white font-medium' : 'hover:bg-blue-800' }}">
-          <i class="fa-solid fa-cloud-arrow-up mr-2"></i>LIS Sync
-        </a>
-        @endif
-        <a href="#" class="block px-3 py-2 rounded-lg hover:bg-blue-800">
-          <i class="fa-solid fa-gear mr-2"></i>Settings
-        </a>
+        @foreach($sidebarLinks as $link)
+          @php($active = in_array($currentPath, $link['match']))
+          <a href="{{ $link['href'] }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition {{ $active ? 'bg-blue-800 text-white font-semibold shadow-lg shadow-blue-950/50' : 'hover:bg-blue-800/70 text-blue-100' }}">
+            <i class="fa-solid {{ $link['icon'] }} w-4 text-center"></i>
+            <span>{{ $link['label'] }}</span>
+          </a>
+        @endforeach
       </nav>
-      <form action="{{ route('logout') }}" method="POST" class="mt-4">
-        @csrf
-        <button type="submit"
-                class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-blue-800 text-blue-200 w-full text-left text-sm">
-          <i class="fa-solid fa-right-from-bracket"></i> Logout
-        </button>
-      </form>
+
+      <div class="mt-6 rounded-xl bg-blue-800/70 p-4 text-xs text-blue-100">
+        <p class="font-semibold">SY 2026-2027</p>
+        <p class="mt-1 text-blue-200">Centralized monitoring for DLL, discipline, and inventory accountability.</p>
+      </div>
     </aside>
 
-    <main class="flex-1">
-      <header class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
-        <h2 class="text-xl font-bold text-blue-900">@yield('page-title')</h2>
+    <main class="flex-1 min-w-0">
+      <header class="bg-white border-b border-slate-200 px-4 sm:px-6 py-4 flex items-center justify-between shadow-sm">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-900 text-white grid place-items-center">
+            <i class="fa-solid fa-school"></i>
+          </div>
+          <div>
+            <p class="text-sm text-slate-500">TrackEd · Department of Education</p>
+            <h2 class="text-xl font-bold text-blue-900">@yield('page-title', 'Dashboard')</h2>
+          </div>
+        </div>
         <div class="flex items-center gap-4">
-          @yield('header-extras')
-          <div class="flex items-center gap-2">
-            <div class="w-10 h-10 rounded-full bg-blue-900 text-white grid place-items-center font-semibold text-sm">
-              {{ Auth::user()->initials() }}
-            </div>
+          <button type="button" class="relative w-10 h-10 rounded-full border border-slate-200 bg-white hover:bg-slate-50">
+            <i class="fa-regular fa-bell text-slate-600"></i>
+            <span class="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] rounded-full px-1.5">3</span>
+          </button>
+          <div class="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2">
+            <div class="w-10 h-10 rounded-full bg-blue-900 text-white grid place-items-center font-semibold text-sm">{{ $profileInitials }}</div>
             <div>
-              <p class="text-sm font-semibold">{{ Auth::user()->name }}</p>
-              <p class="text-xs text-slate-500">{{ Auth::user()->role }}</p>
+              <p class="text-sm font-semibold leading-tight">{{ $profileName }}</p>
+              <p class="text-xs text-slate-500">{{ $profileRole }}</p>
             </div>
           </div>
         </div>
       </header>
 
-      <section class="p-6 space-y-6">
+      <section class="p-4 sm:p-6 space-y-6">
         @yield('content')
       </section>
     </main>
-
   </div>
 
-  @yield('modal')
   @yield('scripts')
 </body>
 </html>
