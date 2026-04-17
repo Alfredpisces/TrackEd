@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function () {
         ->prefix('admin')
         ->name('users.')
         ->group(function () {
+            Route::get('/lis-sync',               fn () => view('admin.lis-sync'))->name('lis-sync');
             Route::get('/users',                  [UserController::class, 'index'])->name('index');
             Route::get('/users/create',           [UserController::class, 'create'])->name('create');
             Route::post('/users',                 [UserController::class, 'store'])->name('store');

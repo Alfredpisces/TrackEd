@@ -11,6 +11,9 @@
         <h1 class="text-2xl font-bold tracking-wide">TrackEd</h1>
       </div>
       <p class="text-blue-100 text-sm mt-2">Centralized School Information System</p>
+      <p class="text-blue-200 text-xs mt-2">
+        Sign in with your registered DepEd email. Access is granted based on PBAC role permissions.
+      </p>
     </div>
 
     <form method="POST" action="/login" class="px-8 py-7 space-y-5">
@@ -30,6 +33,7 @@
 
       <div>
         <label for="email" class="block text-sm font-semibold text-slate-700 mb-1">Email</label>
+        <p class="text-xs text-slate-400 mb-1">Use your DepEd account (e.g., name@deped.edu.ph)</p>
         <input id="email" name="email" type="email" value="{{ old('email') }}" placeholder="name@school.edu.ph"
           class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-700 @error('email') border-rose-400 @enderror" />
       </div>
@@ -44,6 +48,9 @@
         class="w-full rounded-lg bg-blue-900 hover:bg-blue-800 text-white text-center font-semibold py-2.5 transition-colors">
         <i class="fa-solid fa-right-to-bracket mr-2"></i>Login
       </button>
+      <p class="text-xs text-slate-400 text-center">
+        Dashboard modules will appear based on your assigned PBAC permissions.
+      </p>
     </form>
   </div>
 

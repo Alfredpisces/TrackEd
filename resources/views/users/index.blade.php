@@ -25,7 +25,9 @@
         <th class="text-left px-4 py-3">Name</th>
         <th class="text-left px-4 py-3">Email</th>
         <th class="text-left px-4 py-3">Role</th>
+        <th class="text-left px-4 py-3">PBAC Permissions</th>
         <th class="text-left px-4 py-3">School</th>
+        <th class="text-left px-4 py-3">Status</th>
         <th class="text-left px-4 py-3">Last Transfer</th>
         <th class="text-left px-4 py-3">Actions</th>
       </tr>
@@ -39,6 +41,17 @@
           'Counselor'   => 'bg-blue-100 text-blue-700',
           default       => 'bg-slate-100 text-slate-600',
         };
+        $permissionMap = [
+          'Admin' => ['Manage Personnel', 'LIS Sync', 'Inventory Oversight'],
+          'School Head' => ['Approve DLL', 'Encode COT', 'Generate Rankings'],
+          'Counselor' => ['Log Incidents', 'Resolve Cases', 'Issue Good Moral'],
+          'Teacher' => ['Submit DLL', 'Upload Seminars', 'Update Assets'],
+        ];
+        $permissions = $permissionMap[$u->role] ?? ['Limited Access'];
+        $isActive = (bool) $u->school_id;
+        $statusBadge = $isActive
+          ? 'bg-emerald-100 text-emerald-700'
+          : 'bg-slate-200 text-slate-600';
       @endphp
       <tr class="border-b border-slate-100 hover:bg-slate-50">
         <td class="px-4 py-3 font-medium">
@@ -56,7 +69,19 @@
         <td class="px-4 py-3">
           <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold {{ $roleBadge }}">{{ $u->role }}</span>
         </td>
+        <td class="px-4 py-3">
+          <div class="flex flex-wrap gap-1">
+            @foreach($permissions as $perm)
+            <span class="px-2 py-0.5 rounded-full text-xs bg-slate-100 text-slate-600">{{ $perm }}</span>
+            @endforeach
+          </div>
+        </td>
         <td class="px-4 py-3 text-slate-600">{{ $u->school?->name ?? '—' }}</td>
+        <td class="px-4 py-3">
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold {{ $statusBadge }}">
+            {{ $isActive ? 'Active' : 'Inactive' }}
+          </span>
+        </td>
         <td class="px-4 py-3 text-slate-500 text-xs">
           @if($u->transferred_at)
             {{ $u->transferred_at->format('M d, Y') }}<br>
@@ -76,7 +101,7 @@
       </tr>
       @empty
       <tr>
-        <td colspan="6" class="px-4 py-6 text-center text-slate-400 italic">No users found.</td>
+        <td colspan="8" class="px-4 py-6 text-center text-slate-400 italic">No users found.</td>
       </tr>
       @endforelse
     </tbody>
