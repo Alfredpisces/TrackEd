@@ -19,10 +19,10 @@ Route::post('/logout', [LoginController::class, 'logout'])
     ->name('logout')
     ->middleware('auth');
 
-Route::get('/admin', function () { return view('admin.dashboard'); });
-Route::get('/head', function () { return view('head.dashboard'); });
-Route::get('/counselor', function () { return view('counselor.dashboard'); });
-Route::get('/teacher', function () { return view('teacher.dashboard'); });
+Route::get('/admin', function () { return view('admin.dashboard'); })->middleware('auth');
+Route::get('/head', function () { return view('head.dashboard'); })->middleware('auth');
+Route::get('/counselor', function () { return view('counselor.dashboard'); })->middleware('auth');
+Route::get('/teacher', function () { return view('teacher.dashboard'); })->middleware('auth');
 
 /*
 |--------------------------------------------------------------------------

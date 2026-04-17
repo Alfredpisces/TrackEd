@@ -11,9 +11,10 @@
 <body class="bg-slate-100 text-slate-800">
   @php
     $currentPath = request()->path();
-    $profileName = optional(Auth::user())->name ?? 'Dr. Maria Santos';
-    $profileRole = optional(Auth::user())->role ?? 'School Head';
-    $profileInitials = optional(Auth::user())->initials() ?? 'MS';
+    $prototypeProfile = ['name' => 'Dr. Maria Santos', 'role' => 'School Head', 'initials' => 'MS'];
+    $profileName = optional(Auth::user())->name ?? $prototypeProfile['name'];
+    $profileRole = optional(Auth::user())->role ?? $prototypeProfile['role'];
+    $profileInitials = optional(Auth::user())->initials() ?? $prototypeProfile['initials'];
     $sidebarLinks = [
       ['label' => 'Dashboard', 'icon' => 'fa-chart-line', 'href' => '/head', 'match' => ['admin', 'head', 'counselor', 'teacher']],
       ['label' => 'User Management', 'icon' => 'fa-users-gear', 'href' => '/admin', 'match' => ['admin']],
