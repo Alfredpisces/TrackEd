@@ -11,7 +11,6 @@
 <body class="bg-slate-100 text-slate-800">
   @php
     $role = optional(Auth::user())->role ?? '';
-    $currentPath = request()->path();
     $prototypeProfile = ['name' => 'Dr. Maria Santos', 'role' => 'School Head', 'initials' => 'MS'];
     $profileName     = optional(Auth::user())->name     ?? $prototypeProfile['name'];
     $profileRole     = optional(Auth::user())->role     ?? $prototypeProfile['role'];

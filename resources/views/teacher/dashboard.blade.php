@@ -48,7 +48,7 @@
   <article class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
     <p class="text-sm text-slate-500">Saved DLLs</p>
     <p class="text-3xl font-bold text-emerald-600 mt-2" id="teacherDllCount">0</p>
-    <p class="text-xs text-slate-400 mt-1">Drafts in your local log.</p>
+    <p class="text-xs text-slate-400 mt-1">Week plans in your local log.</p>
   </article>
   <article class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
     <p class="text-sm text-slate-500">Assigned Assets</p>
@@ -64,7 +64,7 @@
     <a href="{{ route('teacher-performance') }}"
        class="text-sm text-blue-900 font-semibold hover:underline">Open Full DLL Module →</a>
   </div>
-  <p class="text-sm text-slate-500 mb-5">Prepare a Daily Lesson Log for School Head review. Run the AI Pre-Check before submission.</p>
+  <p class="text-sm text-slate-500 mb-5">Plan your weekly lessons for School Head review. Use the full module to fill in all five days.</p>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <div>
@@ -77,17 +77,18 @@
       </select>
     </div>
     <div>
-      <label class="block text-sm font-medium text-slate-700">Date Covered</label>
-      <input type="date" class="mt-1 w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" value="2026-06-24" />
+      <label class="block text-sm font-medium text-slate-700">Week of <span class="text-xs font-normal text-slate-400">(preview)</span></label>
+      <input type="week" disabled class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm bg-slate-50 text-slate-400 cursor-not-allowed" />
+      <p class="text-xs text-slate-400 mt-1">Open the Full DLL Module to plan and save your weekly lessons.</p>
     </div>
   </div>
 
   <div class="mt-4">
-    <label class="block text-sm font-medium text-slate-700">Objectives</label>
+    <label class="block text-sm font-medium text-slate-700">Objectives (Monday)</label>
     <textarea rows="3" class="mt-1 w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-300 focus:outline-none">At the end of the lesson, learners should explain the law of conservation of mass through guided experimentation.</textarea>
   </div>
   <div class="mt-4">
-    <label class="block text-sm font-medium text-slate-700">Procedures / Learning Activities</label>
+    <label class="block text-sm font-medium text-slate-700">Procedures / Learning Activities (Monday)</label>
     <textarea rows="4" class="mt-1 w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-300 focus:outline-none">1. Review previous topic on chemical reactions. 2. Group activity using vinegar and baking soda setup. 3. Process observations and connect to MELC competency. 4. Reflection and assessment.</textarea>
   </div>
 
@@ -96,9 +97,10 @@
             class="bg-blue-900 hover:bg-blue-800 text-white px-5 py-2.5 rounded-lg text-sm font-semibold">
       <i class="fa-solid fa-wand-magic-sparkles mr-2"></i>Run AI Pre-Check
     </button>
-    <button class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-5 py-2.5 rounded-lg text-sm font-semibold">
-      <i class="fa-regular fa-floppy-disk mr-2"></i>Save Draft
-    </button>
+    <a href="{{ route('teacher-performance') }}"
+       class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-5 py-2.5 rounded-lg text-sm font-semibold inline-flex items-center">
+      <i class="fa-regular fa-calendar-week mr-2"></i>Open Weekly DLL Builder
+    </a>
   </div>
 </section>
 
@@ -233,10 +235,25 @@
   const assets    = JSON.parse(localStorage.getItem('tracked_assets')     || '[]');
 
   document.getElementById('teacherDllCount').textContent = dlls.length;
-  if (dllStatus) {
-    document.getElementById('teacherDllStatus').textContent = dllStatus.label;
-    document.getElementById('teacherDllMeta').textContent   = `Last update: ${dllStatus.at}`;
-  }
+
+  // Show current-week day completion if a record exists, otherwise fall back to stored status
+  (function () {
+    const today = new Date();
+    // Build UTC Monday of the current ISO week to match the weekOf key stored by the DLL builder
+    const utcDow   = today.getUTCDay() || 7; // 1=Mon … 7=Sun
+    const monday   = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - utcDow + 1));
+    const currentWeekOf = monday.toISOString().slice(0, 10);
+    const weekRec = dlls.find(d => d.weekOf === currentWeekOf);
+    const DAYS    = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+    if (weekRec) {
+      const filled = DAYS.filter(d => weekRec.days?.[d] && Object.values(weekRec.days[d]).some(v => v)).length;
+      document.getElementById('teacherDllStatus').textContent = `${filled}/5 days`;
+      document.getElementById('teacherDllMeta').textContent   = 'Lesson plan progress this week.';
+    } else if (dllStatus) {
+      document.getElementById('teacherDllStatus').textContent = dllStatus.label;
+      document.getElementById('teacherDllMeta').textContent   = `Last update: ${dllStatus.at}`;
+    }
+  })();
 
   const blockedAssets = assets.filter(a =>
     ['Damaged', 'Lost'].includes(a.condition) && a.resolution !== 'Paid/Replaced'
