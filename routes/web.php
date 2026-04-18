@@ -19,10 +19,13 @@ Route::post('/logout', [LoginController::class, 'logout'])
     ->name('logout')
     ->middleware('auth');
 
-Route::get('/admin', function () { return view('admin.dashboard'); })->middleware('auth');
-Route::get('/head', function () { return view('head.dashboard'); })->middleware('auth');
-Route::get('/counselor', function () { return view('counselor.dashboard'); })->middleware('auth');
-Route::get('/teacher', function () { return view('teacher.dashboard'); })->middleware('auth');
+// Convenience shortcuts redirect to the real authenticated dashboards
+Route::middleware('auth')->group(function () {
+    Route::get('/admin',     fn () => redirect()->route('dashboard.admin'));
+    Route::get('/head',      fn () => redirect()->route('dashboard.school-head'));
+    Route::get('/counselor', fn () => redirect()->route('dashboard.counselor'));
+    Route::get('/teacher',   fn () => redirect()->route('dashboard.teacher'));
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -34,28 +37,38 @@ Route::middleware('auth')->group(function () {
         return redirect()->route(request()->user()->dashboardRouteName());
     })->name('dashboard');
 
-    Route::get('/dashboard/admin', fn () => view('dashboards.admin'))
+    Route::get('/dashboard/admin', fn () => view('admin.dashboard'))
         ->name('dashboard.admin')
         ->middleware(EnsureRole::class . ':Admin');
-    Route::get('/dashboard/school-head', fn () => view('dashboards.school-head'))
+    Route::get('/dashboard/school-head', fn () => view('school-head.dashboard'))
         ->name('dashboard.school-head')
         ->middleware(EnsureRole::class . ':School Head');
-    Route::get('/dashboard/counselor', fn () => view('dashboards.counselor'))
+    Route::get('/dashboard/counselor', fn () => view('counselor.dashboard'))
         ->name('dashboard.counselor')
         ->middleware(EnsureRole::class . ':Counselor');
-    Route::get('/dashboard/teacher', fn () => view('dashboards.teacher'))
+    Route::get('/dashboard/teacher', fn () => view('teacher.dashboard'))
         ->name('dashboard.teacher')
         ->middleware(EnsureRole::class . ':Teacher');
 
-    Route::get('/teacher-performance', fn () => view('teacher-performance'))
-        ->name('teacher-performance')
-        ->middleware(EnsureRole::class . ':Teacher,School Head');
-    Route::get('/student-behavior', fn () => view('student-behavior'))
+    Route::get('/teacher-performance', function () {
+        $view = request()->user()->role === 'Teacher'
+            ? 'teacher.teacher-performance'
+            : 'school-head.teacher-performance';
+        return view($view);
+    })->name('teacher-performance')
+      ->middleware(EnsureRole::class . ':Teacher,School Head');
+
+    Route::get('/student-behavior', fn () => view('counselor.student-behavior'))
         ->name('student-behavior')
         ->middleware(EnsureRole::class . ':Counselor');
-    Route::get('/property-inventory', fn () => view('property-inventory'))
-        ->name('property-inventory')
-        ->middleware(EnsureRole::class . ':Admin,Teacher');
+
+    Route::get('/property-inventory', function () {
+        $view = request()->user()->role === 'Admin'
+            ? 'admin.property-inventory'
+            : 'teacher.property-inventory';
+        return view($view);
+    })->name('property-inventory')
+      ->middleware(EnsureRole::class . ':Admin,Teacher');
 
     /*
     |----------------------------------------------------------------------
