@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Figure 4 – Administrator PBAC User Management</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="bg-gray-100 text-slate-800 min-h-screen flex">
+
+  <!-- ── Left Sidebar ── -->
+  <aside class="w-64 bg-[#1E3A8A] text-blue-100 flex flex-col min-h-screen shadow-xl">
+    <!-- Logo -->
+    <div class="flex items-center gap-3 px-6 py-5 border-b border-blue-700">
+      <div class="w-10 h-10 rounded-lg bg-blue-700 grid place-items-center">
+        <i class="fa-solid fa-school text-white"></i>
+      </div>
+      <span class="text-white font-bold text-lg tracking-wide">TrackEd</span>
+    </div>
+
+    <!-- Nav links -->
+    <nav class="flex-1 px-4 py-6 space-y-1 text-sm">
+      <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-blue-800/60 text-blue-200">
+        <i class="fa-solid fa-chart-line w-4"></i> Dashboard
+      </a>
+      <!-- Active: User Management -->
+      <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-lg bg-blue-700 text-white font-semibold">
+        <i class="fa-solid fa-users-gear w-4"></i> User Management
+      </a>
+      <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-blue-800/60 text-blue-200">
+        <i class="fa-solid fa-cloud-arrow-up w-4"></i> LIS Sync
+      </a>
+      <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-blue-800/60 text-blue-200">
+        <i class="fa-solid fa-box-archive w-4"></i> Property Inventory
+      </a>
+    </nav>
+
+    <div class="px-4 pb-5">
+      <button class="flex items-center gap-2 w-full px-4 py-2.5 rounded-lg text-sm text-blue-200 hover:bg-blue-800/60">
+        <i class="fa-solid fa-right-from-bracket w-4"></i> Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- ── Main ── -->
+  <div class="flex-1 flex flex-col">
+    <!-- Navbar -->
+    <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 shadow-sm">
+      <div>
+        <p class="text-xs text-slate-400 uppercase tracking-wide">TrackEd · DepEd</p>
+        <h2 class="text-lg font-bold text-[#1E3A8A]">User Management</h2>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-[#1E3A8A] text-white grid place-items-center font-bold text-sm">AD</div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-semibold">Admin User</p>
+          <p class="text-xs text-slate-500">Administrator</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="flex-1 p-6 relative">
+
+      <!-- Table Card -->
+      <div class="bg-white rounded-xl shadow p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-base font-bold text-slate-800">School Personnel Directory</h3>
+          <button class="bg-[#1E3A8A] text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-800">
+            <i class="fa-solid fa-plus mr-1"></i> Add Personnel
+          </button>
+        </div>
+
+        <table class="w-full text-sm text-left">
+          <thead class="bg-gray-50 text-gray-500 uppercase text-xs">
+            <tr>
+              <th class="px-4 py-3">Name</th>
+              <th class="px-4 py-3">Role Designations</th>
+              <th class="px-4 py-3">Email</th>
+              <th class="px-4 py-3">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100 text-slate-700">
+            <tr class="bg-blue-50 font-medium">
+              <td class="px-4 py-3">Maria Santos</td>
+              <td class="px-4 py-3"><span class="bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded-full">Teacher</span></td>
+              <td class="px-4 py-3">maria.santos@deped.edu.ph</td>
+              <td class="px-4 py-3">
+                <button onclick="document.getElementById('modal-overlay').classList.remove('hidden')"
+                        class="bg-[#1E3A8A] text-white text-xs px-3 py-1.5 rounded-lg mr-1">
+                  <i class="fa-solid fa-shield-halved mr-1"></i>Permissions
+                </button>
+                <button class="border border-slate-300 text-xs px-3 py-1.5 rounded-lg text-slate-600">Edit</button>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3">Juan Dela Cruz</td>
+              <td class="px-4 py-3"><span class="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full">Teacher</span></td>
+              <td class="px-4 py-3">juan.delacruz@deped.edu.ph</td>
+              <td class="px-4 py-3">
+                <button class="bg-[#1E3A8A] text-white text-xs px-3 py-1.5 rounded-lg mr-1">
+                  <i class="fa-solid fa-shield-halved mr-1"></i>Permissions
+                </button>
+                <button class="border border-slate-300 text-xs px-3 py-1.5 rounded-lg text-slate-600">Edit</button>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3">Leo Reyes</td>
+              <td class="px-4 py-3"><span class="bg-purple-100 text-purple-700 text-xs px-2 py-0.5 rounded-full">Counselor</span></td>
+              <td class="px-4 py-3">leo.reyes@deped.edu.ph</td>
+              <td class="px-4 py-3">
+                <button class="bg-[#1E3A8A] text-white text-xs px-3 py-1.5 rounded-lg mr-1">
+                  <i class="fa-solid fa-shield-halved mr-1"></i>Permissions
+                </button>
+                <button class="border border-slate-300 text-xs px-3 py-1.5 rounded-lg text-slate-600">Edit</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── PBAC Modal Overlay ── -->
+      <div id="modal-overlay"
+           class="absolute inset-0 bg-black/50 flex items-center justify-center rounded-xl">
+        <div class="bg-white rounded-xl shadow-2xl p-7 w-96">
+          <h4 class="text-base font-bold text-slate-800 mb-1">Edit Permissions: Maria Santos</h4>
+          <p class="text-sm text-slate-500 mb-5">Assign System Access Modules</p>
+
+          <div class="space-y-4">
+            <!-- Checked -->
+            <label class="flex items-start gap-3 cursor-pointer">
+              <div class="w-5 h-5 border-2 border-[#1E3A8A] bg-[#1E3A8A] rounded flex items-center justify-center mt-0.5 flex-shrink-0">
+                <i class="fa-solid fa-check text-white text-[10px]"></i>
+              </div>
+              <div>
+                <p class="text-sm font-medium text-slate-800">Submit DLL</p>
+                <p class="text-xs text-slate-500">Academic module</p>
+              </div>
+            </label>
+
+            <!-- Unchecked -->
+            <label class="flex items-start gap-3 cursor-pointer">
+              <div class="w-5 h-5 border-2 border-gray-300 rounded mt-0.5 flex-shrink-0"></div>
+              <div>
+                <p class="text-sm font-medium text-slate-800">Evaluate Teachers</p>
+                <p class="text-xs text-slate-500">DSS module</p>
+              </div>
+            </label>
+
+            <!-- Checked -->
+            <label class="flex items-start gap-3 cursor-pointer">
+              <div class="w-5 h-5 border-2 border-[#1E3A8A] bg-[#1E3A8A] rounded flex items-center justify-center mt-0.5 flex-shrink-0">
+                <i class="fa-solid fa-check text-white text-[10px]"></i>
+              </div>
+              <div>
+                <p class="text-sm font-medium text-slate-800">Manage Property</p>
+                <p class="text-xs text-slate-500">Inventory module</p>
+              </div>
+            </label>
+          </div>
+
+          <div class="flex justify-end mt-7">
+            <button onclick="document.getElementById('modal-overlay').classList.add('hidden')"
+                    class="mr-3 text-sm text-slate-500 hover:text-slate-700">Cancel</button>
+            <button class="bg-[#1E3A8A] text-white text-sm font-semibold px-5 py-2 rounded-lg hover:bg-blue-800">
+              Save Permissions
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Figure caption -->
+  <div class="fixed bottom-2 left-0 right-0 text-center text-slate-400 text-xs">
+    Figure 4: Administrator User Management – PBAC Interface
+  </div>
+</body>
+</html>

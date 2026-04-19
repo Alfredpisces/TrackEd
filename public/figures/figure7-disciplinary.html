@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Figure 7 – Disciplinary Module &amp; Good Moral Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="bg-gray-100 text-slate-800 min-h-screen flex">
+
+  <!-- ── Left Sidebar ── -->
+  <aside class="w-64 bg-[#1E3A8A] text-blue-100 flex flex-col min-h-screen shadow-xl">
+    <div class="flex items-center gap-3 px-6 py-5 border-b border-blue-700">
+      <div class="w-10 h-10 rounded-lg bg-blue-700 grid place-items-center">
+        <i class="fa-solid fa-school text-white"></i>
+      </div>
+      <span class="text-white font-bold text-lg tracking-wide">TrackEd</span>
+    </div>
+    <nav class="flex-1 px-4 py-6 space-y-1 text-sm">
+      <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-blue-800/60 text-blue-200">
+        <i class="fa-solid fa-chart-line w-4"></i> Dashboard
+      </a>
+      <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-blue-800/60 text-blue-200">
+        <i class="fa-solid fa-user-shield w-4"></i> Student Behavior
+      </a>
+      <!-- Active -->
+      <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-lg bg-blue-700 text-white font-semibold">
+        <i class="fa-solid fa-file-circle-check w-4"></i> Clearances
+      </a>
+      <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-blue-800/60 text-blue-200">
+        <i class="fa-solid fa-chart-bar w-4"></i> Analytics
+      </a>
+    </nav>
+    <div class="px-4 pb-5">
+      <button class="flex items-center gap-2 w-full px-4 py-2.5 rounded-lg text-sm text-blue-200 hover:bg-blue-800/60">
+        <i class="fa-solid fa-right-from-bracket w-4"></i> Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- ── Main ── -->
+  <div class="flex-1 flex flex-col">
+    <!-- Navbar -->
+    <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 shadow-sm">
+      <div>
+        <p class="text-xs text-slate-400 uppercase tracking-wide">TrackEd · DepEd</p>
+        <h2 class="text-lg font-bold text-[#1E3A8A]">Clearances</h2>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-[#1E3A8A] text-white grid place-items-center font-bold text-sm">LR</div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-semibold">Leo Reyes</p>
+          <p class="text-xs text-slate-500">Counselor</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 p-6">
+      <div class="grid grid-cols-2 gap-6 h-full">
+
+        <!-- ── Left: Pending Cases ── -->
+        <div class="bg-white rounded-xl shadow p-6">
+          <h3 class="text-base font-bold text-slate-800 mb-4">
+            <i class="fa-solid fa-circle-exclamation text-amber-500 mr-2"></i>
+            Action Required: Restorative Cases
+          </h3>
+
+          <div class="space-y-3">
+            <!-- Case 1 -->
+            <div class="flex items-center justify-between border border-gray-100 rounded-lg px-4 py-3 bg-amber-50">
+              <div>
+                <p class="text-sm font-semibold text-slate-800">LRN 12345</p>
+                <p class="text-xs text-slate-500">Bullying (Major) · Oct 12, 2024</p>
+              </div>
+              <span class="bg-amber-400 text-white text-xs font-bold px-3 py-1 rounded-full">Pending Intervention</span>
+            </div>
+
+            <!-- Case 2 -->
+            <div class="flex items-center justify-between border border-gray-100 rounded-lg px-4 py-3 bg-amber-50">
+              <div>
+                <p class="text-sm font-semibold text-slate-800">LRN 67890</p>
+                <p class="text-xs text-slate-500">Vandalism (Minor) · Nov 5, 2024</p>
+              </div>
+              <span class="bg-amber-400 text-white text-xs font-bold px-3 py-1 rounded-full">Pending Intervention</span>
+            </div>
+
+            <!-- Case 3 -->
+            <div class="flex items-center justify-between border border-gray-100 rounded-lg px-4 py-3 bg-amber-50">
+              <div>
+                <p class="text-sm font-semibold text-slate-800">LRN 11223</p>
+                <p class="text-xs text-slate-500">Truancy (Minor) · Nov 10, 2024</p>
+              </div>
+              <span class="bg-amber-400 text-white text-xs font-bold px-3 py-1 rounded-full">Pending Intervention</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Right: Good Moral Generator ── -->
+        <div class="bg-white rounded-xl shadow p-6 flex flex-col">
+          <h3 class="text-base font-bold text-slate-800 mb-4">
+            <i class="fa-solid fa-certificate text-[#1E3A8A] mr-2"></i>
+            Good Moral Certificate Generator
+          </h3>
+
+          <!-- Search Bar -->
+          <div class="flex gap-2 mb-5">
+            <input type="text"
+                   value="12345"
+                   placeholder="Enter 12-Digit LRN..."
+                   class="flex-1 border border-gray-300 rounded-lg px-4 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1E3A8A]" />
+            <button class="bg-[#1E3A8A] text-white text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-blue-800">
+              Search
+            </button>
+          </div>
+
+          <!-- ── Blocked Alert ── -->
+          <div class="bg-red-50 border border-red-200 rounded-lg px-5 py-5 flex-1">
+            <div class="flex items-start gap-3">
+              <span class="text-3xl leading-none">🛑</span>
+              <div>
+                <p class="text-base font-bold text-red-700 tracking-wide">CLEARANCE BLOCKED.</p>
+                <p class="text-sm text-red-600 mt-2 leading-relaxed">
+                  Student <strong>LRN 12345</strong> has an unresolved <strong>Major Offense (Bullying)</strong>
+                  dated <strong>Oct 12</strong>. Certificate generation is locked until the Guidance Counselor
+                  logs a restorative intervention.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Generate PDF (disabled) -->
+          <div class="mt-5 flex justify-end">
+            <button disabled
+                    class="bg-gray-300 text-gray-500 text-sm font-semibold px-6 py-2.5 rounded-lg cursor-not-allowed">
+              <i class="fa-solid fa-file-pdf mr-2"></i>Generate PDF
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <div class="fixed bottom-2 left-0 right-0 text-center text-slate-400 text-xs">
+    Figure 7: Disciplinary Module &amp; Good Moral Certificate Generator
+  </div>
+</body>
+</html>

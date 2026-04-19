@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Figure 5 – Teacher DLL Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="bg-gray-100 text-slate-800 min-h-screen flex">
+
+  <!-- ── Left Sidebar ── -->
+  <aside class="w-64 bg-[#1E3A8A] text-blue-100 flex flex-col min-h-screen shadow-xl">
+    <div class="flex items-center gap-3 px-6 py-5 border-b border-blue-700">
+      <div class="w-10 h-10 rounded-lg bg-blue-700 grid place-items-center">
+        <i class="fa-solid fa-school text-white"></i>
+      </div>
+      <span class="text-white font-bold text-lg tracking-wide">TrackEd</span>
+    </div>
+
+    <nav class="flex-1 px-4 py-6 space-y-1 text-sm">
+      <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-blue-800/60 text-blue-200">
+        <i class="fa-solid fa-chart-line w-4"></i> Dashboard
+      </a>
+      <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-blue-800/60 text-blue-200">
+        <i class="fa-solid fa-chalkboard-user w-4"></i> Teacher Performance
+      </a>
+      <!-- Active -->
+      <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-lg bg-blue-700 text-white font-semibold">
+        <i class="fa-solid fa-book-open w-4"></i> DLL Builder
+      </a>
+      <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-blue-800/60 text-blue-200">
+        <i class="fa-solid fa-box-archive w-4"></i> Property Inventory
+      </a>
+    </nav>
+    <div class="px-4 pb-5">
+      <button class="flex items-center gap-2 w-full px-4 py-2.5 rounded-lg text-sm text-blue-200 hover:bg-blue-800/60">
+        <i class="fa-solid fa-right-from-bracket w-4"></i> Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- ── Main ── -->
+  <div class="flex-1 flex flex-col">
+    <!-- Navbar -->
+    <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 shadow-sm">
+      <div>
+        <p class="text-xs text-slate-400 uppercase tracking-wide">TrackEd · DepEd</p>
+        <h2 class="text-lg font-bold text-[#1E3A8A]">DLL Builder</h2>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-[#1E3A8A] text-white grid place-items-center font-bold text-sm">JD</div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-semibold">Juan Dela Cruz</p>
+          <p class="text-xs text-slate-500">Teacher</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="flex-1 p-6">
+      <div class="bg-white rounded-xl shadow p-7 max-w-4xl mx-auto">
+        <h3 class="text-base font-bold text-slate-800 mb-6">Create Daily Lesson Log</h3>
+
+        <!-- Top row: Subject + Date -->
+        <div class="grid grid-cols-2 gap-4 mb-5">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Subject</label>
+            <select class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1E3A8A]">
+              <option>Mathematics 10</option>
+              <option>Science 9</option>
+              <option>English 8</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Date</label>
+            <input type="date" value="2024-11-14"
+                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1E3A8A]" />
+          </div>
+        </div>
+
+        <!-- I. Objectives -->
+        <div class="mb-5">
+          <label class="block text-xs font-semibold text-slate-600 mb-1">I. Objectives</label>
+          <textarea rows="3"
+                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1E3A8A]">At the end of the lesson, students will be able to: identify and apply the properties of a 45-45-90 and 30-60-90 triangle to find missing side lengths in real-world problems.</textarea>
+        </div>
+
+        <!-- II. Content -->
+        <div class="mb-5">
+          <label class="block text-xs font-semibold text-slate-600 mb-1">II. Content</label>
+          <textarea rows="3"
+                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1E3A8A]">Special Right Triangles (Quarter 3, Week 2). Reference: Mathematics 10 Learner's Material pp. 34–40. Materials: ruler, protractor, activity sheets, whiteboard.</textarea>
+        </div>
+
+        <!-- III. Procedures -->
+        <div class="mb-5">
+          <label class="block text-xs font-semibold text-slate-600 mb-1">III. Procedures</label>
+          <textarea rows="4"
+                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1E3A8A]">Motivational activity. Brief review.</textarea>
+        </div>
+
+        <!-- ── AI Alert Box ── -->
+        <div class="flex items-start gap-3 bg-red-50 border-l-4 border-red-500 rounded-r-lg px-4 py-4 mb-6">
+          <i class="fa-solid fa-triangle-exclamation text-red-500 text-lg mt-0.5 flex-shrink-0"></i>
+          <div>
+            <p class="text-sm font-bold text-red-700">AI Pre-Check Failed</p>
+            <p class="text-sm text-red-600 mt-0.5">
+              The <strong>'Procedures'</strong> section contains less than 50 words. Please elaborate on your teaching methodology.
+            </p>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex items-center justify-between gap-3">
+          <!-- Save Draft -->
+          <button class="px-5 py-2.5 border border-gray-400 rounded-lg text-sm text-slate-700 bg-white hover:bg-gray-50">
+            Save Draft
+          </button>
+
+          <!-- Run AI Pre-Check -->
+          <button class="px-5 py-2.5 bg-[#1E3A8A] text-white rounded-lg text-sm font-semibold hover:bg-blue-800">
+            ✨ Run AI Pre-Check
+          </button>
+
+          <!-- Submit (disabled) -->
+          <button disabled
+                  class="px-5 py-2.5 bg-gray-300 text-gray-500 rounded-lg text-sm font-semibold cursor-not-allowed">
+            Submit to School Head
+          </button>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <div class="fixed bottom-2 left-0 right-0 text-center text-slate-400 text-xs">
+    Figure 5: Teacher Workspace &amp; AI-Assisted DLL Builder
+  </div>
+</body>
+</html>
